@@ -1,0 +1,1 @@
+Python-infested Haskell solutions for [AoC 2021](https://adventofcode.com/2021).
