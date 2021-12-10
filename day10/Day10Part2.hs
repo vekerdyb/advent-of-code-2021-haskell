@@ -24,13 +24,11 @@ matching ch
     | ch `elem` closingChars = openingChars !! (fromJust $ elemIndex ch closingChars)
 
 parseLine :: String -> String -> String
+parseLine acceptableClosingChars (ch:[])
+    | ch `elem` openingChars = (matching ch):acceptableClosingChars
+    | ch == acceptableClosingChars!!0 = (removeFirst ch acceptableClosingChars)
+    | otherwise =  ""
 parseLine acceptableClosingChars (ch:str)
-    -- surely this is just one more iteration of the recursion? no time though
-    | str == [] = if ch `elem` openingChars
-                      then (matching ch):acceptableClosingChars
-                      else if ch == acceptableClosingChars!!0
-                                then (removeFirst ch acceptableClosingChars)
-                                else ""
     | ch `elem` openingChars = parseLine ((matching ch):acceptableClosingChars) str
     | ch == acceptableClosingChars!!0 = parseLine (removeFirst ch acceptableClosingChars) str
     | otherwise =  ""
